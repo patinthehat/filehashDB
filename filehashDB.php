@@ -1,3 +1,4 @@
+#!/usr/bin/php
 <?php
 /**
  *
@@ -14,17 +15,28 @@
 define('DATABASE_PATH',       dirname(realpath($argv[0])));
 define('DATABASE_FILE',       'filehashDB.ini');
 define('DATABASE_FILE_FQ',    DATABASE_PATH."/".DATABASE_FILE);
+define('THIS_SCRIPT',         basename($argv[0]));
 define('THIS_SCRIPT_PATH',    dirname(realpath($argv[0])));
 
 include_once('autoload.php');
-//include('print_r_compressed.php');
 
-echo DATABASE_FILE_FQ . "\n";
+function usage() {
+  echo "Usage: ".THIS_SCRIPT." [filename]" . PHP_EOL;
+  echo "  Exit value is 0 if hash is unchanged, or 1 if the file hash has changed." . PHP_EOL; 
+  echo PHP_EOL;
+}
+
+if ($argc <= 1) {
+  usage();
+  exit(-1);
+}
+
+$filename = realpath($argv[1]);
 
 $db = new HashDB(DATABASE_FILE_FQ);
 $db->load();
 
-$fh = new FileHashSHA1("/etc/passwd");
+$fh = new FileHashSHA1($filename);
 $compareHash = $db->compareHash($fh);
 
 echo ($compareHash ? 'unchanged' : 'changed') . PHP_EOL;
@@ -33,21 +45,4 @@ if (!$compareHash)
 
 $db->save();
 
-$db->dump();
-
-exit(0);
-
-
-$hfdata = array();
-$data = file_get_contents("/etc/passwd");
-
-foreach(hash_algos() as $v) {
-  $time=microtime(1);
-  for ($i = 0; $i < 1000; $i++) {
-    $hfdata[$v]['length'] = strlen(hash($v, $data.$i, false));
-  } 
-  $hfdata[$v]['time'] = (microtime(1)-$time) ;
-}
-
-
-print_r($hfdata);
+exit( ($compareHash ? 0 : 1) );
