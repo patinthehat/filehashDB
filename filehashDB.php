@@ -11,12 +11,12 @@
  *
  */
 
-define('DATABASE_PATH',     dirname(realpath($argv[0])));
-define('DATABASE_FILE',     'filehashDB.ini');
-define('DATABASE_FILE_FQ',  DATABASE_PATH."/".DATABASE_FILE);
+define('DATABASE_PATH',       dirname(realpath($argv[0])));
+define('DATABASE_FILE',       'filehashDB.ini');
+define('DATABASE_FILE_FQ',    DATABASE_PATH."/".DATABASE_FILE);
+define('THIS_SCRIPT_PATH',    dirname(realpath($argv[0])));
 
-
-include('autoload.php');
+include_once('autoload.php');
 //include('print_r_compressed.php');
 
 echo DATABASE_FILE_FQ . "\n";

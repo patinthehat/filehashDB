@@ -11,5 +11,8 @@ abstract class FileHash {
       return $this->filename;
     }
     
+    /**
+     * Returns the hash of the specified file.  Must be implemented in child classes. 
+     */
     abstract function getHash();
 }
