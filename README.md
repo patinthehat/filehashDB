@@ -66,7 +66,8 @@ echo ($compareHash ? 'unchanged' : 'changed') . PHP_EOL;
 if (!$compareHash)
   $db->setHash($fh);
 
-$db->save();```
+$db->save();
+```
   
 ---
 
