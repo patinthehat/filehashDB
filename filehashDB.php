@@ -46,7 +46,7 @@ THE SOFTWARE.
  */
 
 define('DATABASE_PATH',       dirname(realpath($argv[0])));
-define('DATABASE_FILE',       'filehashDB.ini');
+define('DATABASE_FILE',       'filehashDB-HashDBXml.xml');
 define('DATABASE_FILE_FQ',    DATABASE_PATH."/".DATABASE_FILE);
 define('THIS_SCRIPT',         basename($argv[0]));
 define('THIS_SCRIPT_PATH',    dirname(realpath($argv[0])));
@@ -66,7 +66,7 @@ if ($argc <= 1) {
 
 $filename = realpath($argv[1]);
 
-$db = new HashDB(DATABASE_FILE_FQ);
+$db = new HashDBXml(DATABASE_FILE_FQ);
 $db->load();
 
 $fh = new FileHashSHA1($filename);
